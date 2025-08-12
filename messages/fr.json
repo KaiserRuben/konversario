@@ -1,0 +1,66 @@
+{
+  "HomePage": {
+    "title": "Konversario",
+    "subtitle": "Conversations IA Multi-Personnalités",
+    "description": "Engagez des conversations avec des figures historiques, personnages fictifs et grands esprits",
+    "privacyNote": "Alimenté par IA locale - vos conversations restent privées",
+    "createRoom": "Créez Votre Salle de Conversation",
+    "whoToTalkTo": "Avec qui aimeriez-vous parler ?",
+    "startConversation": "Commencer la Conversation",
+    "creating": "Création de la Salle...",
+    "placeholder": "par ex. Einstein, Van Gogh et Socrate",
+    "placeholderHelp": "Entrez les noms de figures historiques, personnages fictifs ou rôles descriptifs",
+    "conversationFocus": "Focus de Conversation (Optionnel)",
+    "focusPlaceholder": "par ex. La nature de la créativité, L'éthique en science, L'art et la souffrance",
+    "quickExamples": "Exemples Rapides",
+    "clickExample": "Cliquez sur n'importe quel exemple pour l'essayer :",
+    "requirements": "Prérequis",
+    "requirementsIntro": "Avant de commencer, assurez-vous d'avoir :",
+    "ollamaServe": "Ollama fonctionnant localement (ollama serve)",
+    "ollamaModel": "modèle qwen3:30b installé (ollama pull qwen3:30b)",
+    "ramRequirement": "Au moins 20GB de RAM libre pour des performances optimales",
+    "recentRooms": "Salles Récentes",
+    "noRooms": "Aucune salle de conversation pour le moment. Créez la première !",
+    "messageCount": "{count, plural, =0 {Aucun message} =1 {1 message} other {{count} messages}}",
+    "examples": {
+      "einstein": "Einstein, Van Gogh et Socrate",
+      "curie": "Marie Curie et Tesla", 
+      "writers": "Shakespeare, Maya Angelou et Oscar Wilde",
+      "detective": "Sherlock Holmes et Professeur Moriarty",
+      "timeTravel": "Un chevalier médiéval et un explorateur spatial",
+      "leaders": "Gandhi, MLK et Nelson Mandela"
+    }
+  },
+  "RoomPage": {
+    "backToHome": "Retour à l'Accueil",
+    "conversationRoom": "Salle de Conversation",
+    "focus": "Focus",
+    "atmosphere": "Atmosphère",
+    "participants": "Participants",
+    "loadingRoom": "Chargement de la salle de conversation...",
+    "roomNotFound": "Salle introuvable ou échec du chargement",
+    "failedToLoadMessages": "Échec du chargement de l'historique de conversation",
+    "placeholder": "Partagez vos pensées avec la salle...",
+    "send": "Envoyer",
+    "keyboardHint": "Appuyez sur Entrée pour envoyer, Maj+Entrée pour une nouvelle ligne"
+  },
+  "Common": {
+    "loading": "Chargement...",
+    "error": "Erreur",
+    "retry": "Réessayer",
+    "cancel": "Annuler",
+    "save": "Sauvegarder",
+    "delete": "Supprimer",
+    "edit": "Modifier",
+    "close": "Fermer",
+    "user": "Utilisateur",
+    "system": "Système",
+    "typing": "tape..."
+  },
+  "Errors": {
+    "failedToSend": "Échec de l'envoi du message",
+    "failedToCreate": "Échec de la création de la salle",
+    "networkError": "Erreur réseau. Veuillez réessayer.",
+    "unexpectedError": "Une erreur inattendue s'est produite"
+  }
+}

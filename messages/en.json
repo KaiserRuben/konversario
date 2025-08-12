@@ -1,0 +1,66 @@
+{
+  "HomePage": {
+    "title": "Konversario",
+    "subtitle": "Multi-Personality AI Conversations",
+    "description": "Engage in conversations with historical figures, fictional characters, and great minds",
+    "privacyNote": "Powered by local AI - your conversations stay private",
+    "createRoom": "Create Your Conversation Room",
+    "whoToTalkTo": "Who would you like to talk to?",
+    "startConversation": "Start Conversation",
+    "creating": "Creating Room...",
+    "placeholder": "e.g., Einstein, Van Gogh, and Socrates",
+    "placeholderHelp": "Enter names of historical figures, fictional characters, or descriptive roles",
+    "conversationFocus": "Conversation Focus (Optional)",
+    "focusPlaceholder": "e.g., The nature of creativity, Ethics in science, Art and suffering",
+    "quickExamples": "Quick Examples",
+    "clickExample": "Click any example to try it:",
+    "requirements": "Requirements",
+    "requirementsIntro": "Before starting, make sure you have:",
+    "ollamaServe": "Ollama running locally (ollama serve)",
+    "ollamaModel": "qwen3:30b model installed (ollama pull qwen3:30b)",
+    "ramRequirement": "At least 20GB of free RAM for optimal performance",
+    "recentRooms": "Recent Rooms",
+    "noRooms": "No conversation rooms yet. Create your first one!",
+    "messageCount": "{count, plural, =0 {No messages} =1 {1 message} other {{count} messages}}",
+    "examples": {
+      "einstein": "Einstein, Van Gogh, and Socrates",
+      "curie": "Marie Curie and Tesla", 
+      "writers": "Shakespeare, Maya Angelou, and Oscar Wilde",
+      "detective": "Sherlock Holmes and Professor Moriarty",
+      "timeTravel": "A medieval knight and a space explorer",
+      "leaders": "Gandhi, MLK, and Nelson Mandela"
+    }
+  },
+  "RoomPage": {
+    "backToHome": "Back to Home",
+    "conversationRoom": "Conversation Room",
+    "focus": "Focus",
+    "atmosphere": "Atmosphere",
+    "participants": "Participants",
+    "loadingRoom": "Loading conversation room...",
+    "roomNotFound": "Room not found or failed to load",
+    "failedToLoadMessages": "Failed to load conversation history",
+    "placeholder": "Share your thoughts with the room...",
+    "send": "Send",
+    "keyboardHint": "Press Enter to send, Shift+Enter for new line"
+  },
+  "Common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "retry": "Retry",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "close": "Close",
+    "user": "User",
+    "system": "System",
+    "typing": "is typing..."
+  },
+  "Errors": {
+    "failedToSend": "Failed to send message",
+    "failedToCreate": "Failed to create room",
+    "networkError": "Network error. Please try again.",
+    "unexpectedError": "An unexpected error occurred"
+  }
+}

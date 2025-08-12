@@ -1,0 +1,66 @@
+{
+  "HomePage": {
+    "title": "Konversario",
+    "subtitle": "Multi-Persönlichkeits-KI-Gespräche",
+    "description": "Führen Sie Gespräche mit historischen Figuren, fiktionalen Charakteren und großen Denkern",
+    "privacyNote": "Angetrieben von lokaler KI - Ihre Gespräche bleiben privat",
+    "createRoom": "Erstellen Sie Ihren Gesprächsraum",
+    "whoToTalkTo": "Mit wem möchten Sie sprechen?",
+    "startConversation": "Gespräch starten",
+    "creating": "Raum wird erstellt...",
+    "placeholder": "z.B. Einstein, Van Gogh und Sokrates",
+    "placeholderHelp": "Geben Sie Namen von historischen Figuren, fiktionalen Charakteren oder beschreibende Rollen ein",
+    "conversationFocus": "Gesprächsfokus (Optional)",
+    "focusPlaceholder": "z.B. Die Natur der Kreativität, Ethik in der Wissenschaft, Kunst und Leid",
+    "quickExamples": "Schnelle Beispiele",
+    "clickExample": "Klicken Sie auf ein beliebiges Beispiel, um es auszuprobieren:",
+    "requirements": "Voraussetzungen",
+    "requirementsIntro": "Stellen Sie vor dem Start sicher, dass Sie haben:",
+    "ollamaServe": "Ollama läuft lokal (ollama serve)",
+    "ollamaModel": "qwen3:30b Modell installiert (ollama pull qwen3:30b)",
+    "ramRequirement": "Mindestens 20GB freier RAM für optimale Leistung",
+    "recentRooms": "Aktuelle Räume",
+    "noRooms": "Noch keine Gesprächsräume. Erstellen Sie Ihren ersten!",
+    "messageCount": "{count, plural, =0 {Keine Nachrichten} =1 {1 Nachricht} other {{count} Nachrichten}}",
+    "examples": {
+      "einstein": "Einstein, Van Gogh und Sokrates",
+      "curie": "Marie Curie und Tesla", 
+      "writers": "Shakespeare, Maya Angelou und Oscar Wilde",
+      "detective": "Sherlock Holmes und Professor Moriarty",
+      "timeTravel": "Ein mittelalterlicher Ritter und ein Weltraumforscher",
+      "leaders": "Gandhi, MLK und Nelson Mandela"
+    }
+  },
+  "RoomPage": {
+    "backToHome": "Zurück zur Startseite",
+    "conversationRoom": "Gesprächsraum",
+    "focus": "Fokus",
+    "atmosphere": "Atmosphäre",
+    "participants": "Teilnehmer",
+    "loadingRoom": "Lade Gesprächsraum...",
+    "roomNotFound": "Raum nicht gefunden oder Fehler beim Laden",
+    "failedToLoadMessages": "Fehler beim Laden der Gesprächshistorie",
+    "placeholder": "Teilen Sie Ihre Gedanken mit dem Raum...",
+    "send": "Senden",
+    "keyboardHint": "Enter zum Senden, Umschalt+Enter für neue Zeile"
+  },
+  "Common": {
+    "loading": "Laden...",
+    "error": "Fehler",
+    "retry": "Erneut versuchen",
+    "cancel": "Abbrechen",
+    "save": "Speichern",
+    "delete": "Löschen",
+    "edit": "Bearbeiten",
+    "close": "Schließen",
+    "user": "Benutzer",
+    "system": "System",
+    "typing": "tippt..."
+  },
+  "Errors": {
+    "failedToSend": "Fehler beim Senden der Nachricht",
+    "failedToCreate": "Fehler beim Erstellen des Raums",
+    "networkError": "Netzwerkfehler. Bitte versuchen Sie es erneut.",
+    "unexpectedError": "Ein unerwarteter Fehler ist aufgetreten"
+  }
+}

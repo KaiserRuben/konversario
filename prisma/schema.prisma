@@ -1,0 +1,33 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model ConversationRoom {
+  id            String      @id @default(cuid())
+  userId        String?
+  title         String?
+  participants  String      // JSON string of participant objects
+  focus         String?
+  status        String      @default("active")
+  messages      Message[]
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+}
+
+model Message {
+  id                    String           @id @default(cuid())
+  roomId                String
+  room                  ConversationRoom @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  authorName            String
+  authorType            String           // "user" | "participant" | "system"
+  content               String
+  metadata              String?          // JSON string for emotions, gestures, etc.
+  conversationStage     String?          // JSON string of stage assessment
+  responseModulation    String?          // JSON string of modulation parameters
+  timestamp             DateTime         @default(now())
+}
