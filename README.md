@@ -203,18 +203,6 @@ Content-Type: application/json
 }
 ```
 
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Test with different character combinations
-5. Submit a pull request
-
-## 📜 License
-
-This project is open source and available under the MIT License.
-
 ## 🙏 Acknowledgments
 
 - **Ollama** for making local LLMs accessible
