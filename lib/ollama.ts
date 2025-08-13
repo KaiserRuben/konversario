@@ -22,7 +22,7 @@ export class OllamaError extends Error {
 export async function callOllama(
   prompt: string, 
   format: 'json' | 'text' | object = 'json'
-): Promise<any> {
+): Promise<unknown> {
   try {
     const response = await fetch(`${OLLAMA_CONFIG.baseUrl}/api/generate`, {
       method: 'POST',
@@ -55,7 +55,7 @@ export async function callOllama(
     if (format === 'json' || typeof format === 'object') {
       try {
         return JSON.parse(data.response);
-      } catch (e) {
+      } catch {
         console.error('Failed to parse JSON response:', data.response);
         throw new OllamaError('Invalid JSON response from LLM', 'PARSE_ERROR');
       }
@@ -66,16 +66,17 @@ export async function callOllama(
     if (error instanceof OllamaError) {
       throw error;
     }
-    if (error.name === 'AbortError') {
+    const err = error as { name?: string; code?: string; message?: string };
+    if (err.name === 'AbortError') {
       throw new OllamaError('Request timed out', 'TIMEOUT');
     }
-    if (error.code === 'ECONNREFUSED') {
+    if (err.code === 'ECONNREFUSED') {
       throw new OllamaError(
         'Cannot connect to Ollama. Please ensure Ollama is running on http://localhost:11434',
         'CONNECTION_ERROR'
       );
     }
-    throw new OllamaError(`Unexpected error: ${error.message}`, 'API_ERROR');
+    throw new OllamaError(`Unexpected error: ${err.message || 'Unknown error'}`, 'API_ERROR');
   }
 }
 

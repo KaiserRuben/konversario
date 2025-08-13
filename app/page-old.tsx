@@ -7,14 +7,13 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
-import { Separator } from '@/components/ui/separator';
 import { Badge } from '@/components/ui/badge';
 
 interface Room {
   id: string;
   title: string | null;
   focus: string | null;
-  participants: any[];
+  participants: string;
   status: string;
   createdAt: string;
   _count: { messages: number };
@@ -22,7 +21,6 @@ interface Room {
 
 export default function Home() {
   const t = useTranslations('HomePage');
-  const tCommon = useTranslations('Common');
   const tErrors = useTranslations('Errors');
   const [personalities, setPersonalities] = useState('');
   const [focus, setFocus] = useState('');
@@ -168,16 +166,26 @@ export default function Home() {
                         <div className="space-y-3">
                           <div className="flex items-start justify-between">
                             <div className="flex items-center gap-2 flex-wrap">
-                              {chat.participants.slice(0, 3).map((participant, index) => (
-                                <Badge key={index} variant="outline" className="text-xs">
-                                  {participant.name}
-                                </Badge>
-                              ))}
-                              {chat.participants.length > 3 && (
-                                <Badge variant="outline" className="text-xs">
-                                  +{chat.participants.length - 3}
-                                </Badge>
-                              )}
+                              {(() => {
+                                const participants = typeof chat.participants === 'string' 
+                                  ? JSON.parse(chat.participants) 
+                                  : [];
+                                return participants.slice(0, 3).map((participant: { name: string }, index: number) => (
+                                  <Badge key={index} variant="outline" className="text-xs">
+                                    {participant.name}
+                                  </Badge>
+                                ))
+                              })()}
+                              {(() => {
+                                const participants = typeof chat.participants === 'string' 
+                                  ? JSON.parse(chat.participants) 
+                                  : [];
+                                return participants.length > 3 && (
+                                  <Badge variant="outline" className="text-xs">
+                                    +{participants.length - 3}
+                                  </Badge>
+                                )
+                              })()}
                             </div>
                             <div className="flex items-center gap-1 text-xs text-slate-500">
                               <span className={`w-2 h-2 rounded-full ${

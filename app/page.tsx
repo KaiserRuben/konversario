@@ -10,17 +10,15 @@ import * as THREE from 'three';
 import { cn } from '@/lib/utils';
 import {
   getTimeBasedAtmosphere,
-  generateCSSVariables,
-  stringToHash
+  generateCSSVariables
 } from '@/lib/design-system';
-import { useUIStore } from '@/store/ui-store';
-import { Send, Sparkles, ChevronDown } from 'lucide-react';
+import { Send, ChevronDown } from 'lucide-react';
 
 interface Room {
   id: string;
   title: string | null;
   focus: string | null;
-  participants: any[];
+  participants: string;
   status: string;
   createdAt: string;
   _count: { messages: number };
@@ -64,9 +62,12 @@ function ConversationOrb({
   });
 
   // Extract first letters of participants for display
-  const initials = room.participants
+  const parsedParticipants = typeof room.participants === 'string' 
+    ? JSON.parse(room.participants) 
+    : room.participants;
+  const initials = (Array.isArray(parsedParticipants) ? parsedParticipants : [])
       .slice(0, 2)
-      .map(p => p.name?.[0] || '?')
+      .map((p: { name?: string }) => p.name?.[0] || '?')
       .join('');
 
   return (
@@ -234,7 +235,7 @@ function BreathingGrid() {
       const gravityRadius = 3; // Smaller, more subtle influence
       const gravityStrength = 0.4; // Gentler attraction
       
-      let finalPosition = basePosition.clone();
+      const finalPosition = basePosition.clone();
       
       if (distanceToMouse < gravityRadius) {
         // Calculate attraction force (stronger when closer)
@@ -324,9 +325,12 @@ function MobileConversationList({
         <div className="space-y-2">
           {listTrail.map((style, i) => {
             const room = rooms[i];
-            const initials = room.participants
+            const parsedParticipants = typeof room.participants === 'string' 
+              ? JSON.parse(room.participants) 
+              : room.participants;
+            const initials = (Array.isArray(parsedParticipants) ? parsedParticipants : [])
                 .slice(0, 2)
-                .map(p => p.name?.[0] || '?')
+                .map((p: { name?: string }) => p.name?.[0] || '?')
                 .join('');
 
             return (
@@ -342,10 +346,10 @@ function MobileConversationList({
                     </div>
                     <div className="text-left">
                       <div className="text-xs text-slate-700 dark:text-slate-300">
-                        {room.focus?.slice(0, 30) || tRoom('conversationRoom')}
+                        {room.focus?.slice(0, 30) || 'Conversation'}
                       </div>
                       <div className="text-[10px] text-slate-500 dark:text-slate-500">
-                        {t('messageCount', {count: room._count.messages})}
+                        {room._count.messages} messages
                       </div>
                     </div>
                   </div>
@@ -363,7 +367,6 @@ function MobileConversationList({
 export default function HomePage() {
   const t = useTranslations('HomePage');
   const tErrors = useTranslations('Errors');
-  const tRoom = useTranslations('RoomPage');
 
   const [input, setInput] = useState('');
   const [focus, setFocus] = useState('');

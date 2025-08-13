@@ -151,11 +151,10 @@ export function MessageEthereal({ message, index, totalMessages }: MessageEthere
                         'text-slate-500 dark:text-slate-400',
                         'transition-all duration-300',
                         showInternalThoughts === 'hover' && !isHovered && 'opacity-0',
-                        showInternalThoughts === 'hover' && isHovered && 'opacity-60',
-                        showInternalThoughts === 'always' && 'opacity-40'
+                        showInternalThoughts === 'hover' && isHovered && 'opacity-80',
+                        showInternalThoughts === 'always' && 'opacity-80'
                     )}
                     style={{
-                        filter: 'blur(0.5px)',
                         transform: isHovered ? 'translateY(-4px)' : 'translateY(0)',
                     }}
                 >
@@ -199,9 +198,6 @@ export function MessageEthereal({ message, index, totalMessages }: MessageEthere
                 {metadata?.subtext && (
                     <div
                         className="mt-2 text-xs opacity-30 italic"
-                        style={{
-                            filter: 'blur(0.3px)',
-                        }}
                     >
                         {metadata.subtext}
                     </div>

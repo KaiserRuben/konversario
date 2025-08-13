@@ -2,15 +2,15 @@
 
 import { useRef, useMemo, useState, useEffect } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { Points, PointMaterial } from '@react-three/drei';
+import { Points } from '@react-three/drei';
 import * as THREE from 'three';
 import { useSpring, animated } from '@react-spring/three';
 import { getParticleConfig } from '@/lib/design-system';
 import { useParticleSettings } from '@/store/ui-store';
 
 interface ParticleFieldProps {
-    metadata?: any;
-    conversationStage?: any;
+    metadata?: Record<string, unknown>;
+    conversationStage?: { userState?: string; momentum?: string; suggestedDepth?: string };
     intensity?: number;
 }
 
@@ -19,7 +19,7 @@ function BreathingParticles({
     color = '#3b82f6',
     behavior = 'breathe',
     speed = 0.3, // Much slower default
-    opacity = 0.15, // More visible individual particles
+    opacity = 0.3, // More visible individual particles
 }: {
     count: number;
     color: string;
@@ -199,6 +199,7 @@ function BreathingParticles({
 }
 
 // Lightweight cursor trail (optional, very subtle)
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function CursorGlow() {
     const mouse = useRef({ x: 0, y: 0 });
     const trailRef = useRef<THREE.Mesh>(null);
@@ -241,6 +242,15 @@ export function ParticleField({ metadata, conversationStage, intensity = 0.5 }: 
     const particleSettings = useParticleSettings();
     const [localIntensity, setLocalIntensity] = useState(intensity);
 
+    // Fade in/out based on conversation activity
+    useEffect(() => {
+        if (metadata?.emotion) {
+            setLocalIntensity(0.8);
+            const timer = setTimeout(() => setLocalIntensity(0.3), 3000);
+            return () => clearTimeout(timer);
+        }
+    }, [metadata]);
+
     if (!particleSettings.enabled) return null;
 
     // Adjust behavior based on conversation stage
@@ -267,15 +277,6 @@ export function ParticleField({ metadata, conversationStage, intensity = 0.5 }: 
         baseCount + intensityBonus, // 200-300 particles
         particleSettings.maxCount
     );
-
-    // Fade in/out based on conversation activity
-    useEffect(() => {
-        if (metadata?.emotion) {
-            setLocalIntensity(0.8);
-            const timer = setTimeout(() => setLocalIntensity(0.3), 3000);
-            return () => clearTimeout(timer);
-        }
-    }, [metadata]);
 
     if (particleCount === 0) return null;
 
@@ -304,7 +305,7 @@ export function ParticleField({ metadata, conversationStage, intensity = 0.5 }: 
 }
 
 // Per-message particles - even more minimal
-export function MessageParticles({ message }: { message: any }) {
+export function MessageParticles({ message }: { message: { metadata?: string | Record<string, unknown> } }) {
     const metadata = useMemo(() => {
         try {
             return typeof message.metadata === 'string'
@@ -342,7 +343,7 @@ export function MessageParticles({ message }: { message: any }) {
                     color={config.color}
                     behavior="breathe"
                     speed={0.2} // Very slow
-                    opacity={0.08} // More visible individual particles
+                    opacity={0.1} // More visible individual particles
                 />
             </Canvas>
         </div>

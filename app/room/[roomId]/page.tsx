@@ -34,7 +34,6 @@ export default function EtherealRoomPage({ params }: { params: Promise<{ roomId:
   const { roomId } = resolvedParams;
 
   const t = useTranslations('RoomPage');
-  const tCommon = useTranslations('Common');
   const tErrors = useTranslations('Errors');
 
   const [messages, setMessages] = useState<Message[]>([]);
@@ -49,7 +48,7 @@ export default function EtherealRoomPage({ params }: { params: Promise<{ roomId:
   const router = useRouter();
 
   // UI Store
-  const { atmosphere, depth } = useAtmosphere();
+  const { atmosphere } = useAtmosphere();
   const preferences = useUIStore((state) => state.preferences);
   const setPreference = useUIStore((state) => state.setPreference);
   const setConversationDepth = useUIStore((state) => state.setConversationDepth);
@@ -81,6 +80,7 @@ export default function EtherealRoomPage({ params }: { params: Promise<{ roomId:
   useEffect(() => {
     loadRoom();
     loadMessages();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [roomId]);
 
   const loadRoom = async () => {
@@ -203,7 +203,6 @@ export default function EtherealRoomPage({ params }: { params: Promise<{ roomId:
   // Get last message metadata for particle field
   const lastMessage = messages[messages.length - 1];
   const lastMetadata = lastMessage?.metadata;
-  const lastStage = lastMessage?.conversationStage;
 
   return (
       <div className="h-screen relative overflow-hidden bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-950 dark:to-slate-900">
@@ -223,7 +222,6 @@ export default function EtherealRoomPage({ params }: { params: Promise<{ roomId:
         {preferences.particlesEnabled && (
             <ParticleField
                 metadata={lastMetadata}
-                conversationStage={lastStage}
                 intensity={useUIStore.getState().emotionIntensity}
             />
         )}
@@ -298,7 +296,7 @@ export default function EtherealRoomPage({ params }: { params: Promise<{ roomId:
                   <span>Internal Thoughts</span>
                   <select
                       value={preferences.showInternalThoughts}
-                      onChange={(e) => setPreference('showInternalThoughts', e.target.value as any)}
+                      onChange={(e) => setPreference('showInternalThoughts', e.target.value as 'always' | 'hover' | 'never')}
                       className="ml-2 bg-transparent border rounded px-1"
                   >
                     <option value="always">Always</option>
@@ -311,7 +309,7 @@ export default function EtherealRoomPage({ params }: { params: Promise<{ roomId:
                   <span>Layout</span>
                   <select
                       value={preferences.messageLayout}
-                      onChange={(e) => setPreference('messageLayout', e.target.value as any)}
+                      onChange={(e) => setPreference('messageLayout', e.target.value as 'floating' | 'aligned' | 'timeline')}
                       className="ml-2 bg-transparent border rounded px-1"
                   >
                     <option value="floating">Floating</option>

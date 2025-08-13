@@ -23,11 +23,19 @@ export async function withRetry<T>(
 }
 
 export function validateResponse<T>(
-  response: any,
+  response: unknown,
   requiredFields: string[]
 ): T {
+  if (!response || typeof response !== 'object') {
+    throw new LLMError(
+      'Response must be an object',
+      'INVALID_RESPONSE'
+    );
+  }
+  
+  const obj = response as Record<string, unknown>;
   for (const field of requiredFields) {
-    if (!(field in response)) {
+    if (!(field in obj)) {
       throw new LLMError(
         `Missing required field: ${field}`,
         'INVALID_RESPONSE'
@@ -37,7 +45,7 @@ export function validateResponse<T>(
   return response as T;
 }
 
-export function createFallbackResponse(type: 'setup' | 'orchestration' | 'character' | 'exchange'): any {
+export function createFallbackResponse(type: 'setup' | 'orchestration' | 'character' | 'exchange'): Record<string, unknown> {
   switch (type) {
     case 'setup':
       return {
@@ -93,19 +101,21 @@ export function createFallbackResponse(type: 'setup' | 'orchestration' | 'charac
   }
 }
 
-export function getErrorMessage(error: any): string {
-  if (error?.code === 'MODEL_NOT_FOUND') {
+export function getErrorMessage(error: { code?: string; message?: string } | unknown): string {
+  const err = error as { code?: string; message?: string };
+  
+  if (err?.code === 'MODEL_NOT_FOUND') {
     return 'The AI model is not available. Please ensure Ollama is running and the qwen3:30b model is installed.';
   }
-  if (error?.code === 'CONNECTION_ERROR') {
+  if (err?.code === 'CONNECTION_ERROR') {
     return 'Cannot connect to the AI service. Please ensure Ollama is running on localhost:11434.';
   }
-  if (error?.code === 'TIMEOUT') {
+  if (err?.code === 'TIMEOUT') {
     return 'The AI is taking too long to respond. Please try again.';
   }
-  if (error?.code === 'PARSE_ERROR') {
+  if (err?.code === 'PARSE_ERROR') {
     return 'The AI response was malformed. This might be a temporary issue.';
   }
   
-  return error?.message || 'An unexpected error occurred.';
+  return err?.message || 'An unexpected error occurred.';
 }

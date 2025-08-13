@@ -31,7 +31,9 @@ export function EmotionRiver({ messages, className }: EmotionVisualizerProps) {
             return emotionVisualMap[emotion].glowIntensity;
         });
 
-        return intensities.reduce((a, b) => a + b, 0) / intensities.length;
+        if (intensities.length === 0) return 0.5;
+        const sum = intensities.reduce((sum: number, intensity) => sum + Number(intensity), 0);
+        return sum / intensities.length;
     }, [messages]);
 
     // Update global emotion intensity
@@ -43,9 +45,6 @@ export function EmotionRiver({ messages, className }: EmotionVisualizerProps) {
     const springs = useSprings(
         messages.length,
         messages.map((msg, i) => {
-            const metadata = parseMetadata(msg.metadata);
-            const emotion = extractEmotion(metadata?.emotion || '');
-            const visual = emotionVisualMap[emotion];
             const isHovered = hoveredMessage === msg.id;
             const opacity = getMessageOpacity(msg.timestamp);
 
@@ -71,7 +70,7 @@ export function EmotionRiver({ messages, className }: EmotionVisualizerProps) {
                 viewBox="0 0 48 100"
             >
                 <defs>
-                    {messages.map((msg, i) => {
+                    {messages.map((msg) => {
                         const metadata = parseMetadata(msg.metadata);
                         const emotion = extractEmotion(metadata?.emotion || '');
                         const visual = emotionVisualMap[emotion];
@@ -95,9 +94,6 @@ export function EmotionRiver({ messages, className }: EmotionVisualizerProps) {
 
                 {springs.map((spring, i) => {
                     const msg = messages[i];
-                    const metadata = parseMetadata(msg.metadata);
-                    const emotion = extractEmotion(metadata?.emotion || '');
-                    const visual = emotionVisualMap[emotion];
                     const y = (i / messages.length) * 100;
                     const height = 100 / messages.length;
 
@@ -205,7 +201,7 @@ export function EmotionalAtmosphere({ messages }: { messages: Message[] }) {
 }
 
 // Personality avatars on the right edge with enhanced character info
-export function PersonalityAvatars({ participants }: { participants: any[] }) {
+export function PersonalityAvatars({ participants }: { participants: { id: string; name: string; identity: string; personality: string; currentState: string; lastSpoke?: number; knowledge: string; era?: string }[] }) {
     const activeSpeaker = useUIStore((state) => state.activeSpeaker);
 
     const springs = useSprings(

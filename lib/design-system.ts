@@ -535,8 +535,9 @@ export function getMessageOpacity(timestamp: number): number {
 }
 
 // Parse metadata safely
-export function parseMetadata(metadata: string | undefined | null) {
+export function parseMetadata(metadata: string | Record<string, unknown> | undefined | null) {
     if (!metadata) return {};
+    if (typeof metadata === 'object') return metadata;
 
     try {
         return typeof metadata === 'string' ? JSON.parse(metadata) : metadata;
@@ -579,8 +580,8 @@ export function extractManner(mannerText: string): {
 }
 
 // Generate particle configuration from metadata
-export function getParticleConfig(metadata: any, conversationStage?: any) {
-    const emotion = extractEmotion(metadata?.emotion || '');
+export function getParticleConfig(metadata: Record<string, unknown> | undefined, conversationStage?: { momentum?: string; suggestedDepth?: string }) {
+    const emotion = extractEmotion((metadata?.emotion as string) || '');
     const visual = emotionVisualMap[emotion];
     const momentum = conversationStage?.momentum || 'sustained';
     const depth = conversationStage?.suggestedDepth || 'accessible';
@@ -596,7 +597,7 @@ export function getParticleConfig(metadata: any, conversationStage?: any) {
 }
 
 // Calculate message importance based on all metadata
-export function getMessageImportance(message: any): number {
+export function getMessageImportance(message: { metadata?: string | Record<string, unknown>; conversationStage?: string | Record<string, unknown>; responseModulation?: string | Record<string, unknown>; authorType?: string }): number {
     const metadata = parseMetadata(message.metadata);
     const stage = parseMetadata(message.conversationStage);
     const modulation = parseMetadata(message.responseModulation);
@@ -627,7 +628,7 @@ export function getMessageImportance(message: any): number {
 }
 
 // Map conversation stage to atmosphere intensity
-export function getStageAtmosphere(stage: any): {
+export function getStageAtmosphere(stage: { userState?: string; momentum?: string; suggestedDepth?: string } | undefined): {
     intensity: number;
     blur: number;
     particleDensity: number;
@@ -721,10 +722,9 @@ export function parseEffect(effectText: string): {
 }
 
 // Combine all metadata to get comprehensive visual state
-export function getComprehensiveVisualState(message: any) {
+export function getComprehensiveVisualState(message: { metadata?: string | Record<string, unknown>; conversationStage?: string | Record<string, unknown>; responseModulation?: string | Record<string, unknown>; authorType?: string }) {
     const metadata = parseMetadata(message.metadata);
     const stage = parseMetadata(message.conversationStage);
-    const modulation = parseMetadata(message.responseModulation);
 
     const emotion = extractEmotion(metadata?.emotion || '');
     const emotionVisual = emotionVisualMap[emotion];

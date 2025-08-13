@@ -55,7 +55,7 @@ export async function POST(
     const roomState: Room = {
       id: room.id,
       participants,
-      topic: room.focus,
+      topic: room.focus || undefined,
       messages: room.messages.map(msg => ({
         id: msg.id,
         authorName: msg.authorName,
@@ -65,7 +65,7 @@ export async function POST(
         metadata: msg.metadata ? JSON.parse(msg.metadata) : undefined
       })),
       state: { 
-        status: room.status as any,
+        status: room.status as 'setup' | 'active' | 'waiting_user' | 'processing',
         contextSummary: '',
         turnCount: room.messages.length,
         lastActivity: Date.now(),
@@ -84,50 +84,21 @@ export async function POST(
     if (!orchestration.plan || !Array.isArray(orchestration.plan)) {
       console.warn('Invalid orchestration response, using fallback:', { orchestration });
       
-      // Try to parse if it's a string
-      if (typeof orchestration.orchestration === 'string') {
-        try {
-          const parsed = JSON.parse(orchestration.orchestration);
-          orchestration = parsed;
-        } catch (e) {
-          console.warn('Failed to parse orchestration string:', e);
-        }
-      }
-      
-      // Try to extract data from alternative response formats
-      if (orchestration.orchestration?.response?.speaker) {
-        // Handle alternative format where LLM returns nested structure
-        orchestration = {
-          interpretation: 'User asked a question',
-          plan: [
-            {
-              who: orchestration.orchestration.response.speaker,
-              why: orchestration.orchestration.analysis?.reason || 'Responding to the user',
-              when: 'immediate' as const,
-              likelihood: 'Will respond'
-            }
-          ],
-          expectedDynamic: 'Continuing conversation',
-          continueWithoutUser: false,
-          tensionLevel: 'Relaxed'
-        };
-      } else if (!orchestration.plan || !Array.isArray(orchestration.plan)) {
-        // Complete fallback
-        orchestration = {
-          interpretation: 'User wants to continue the conversation',
-          plan: [
-            {
-              who: participants.length > 0 ? participants[0].name : 'Assistant',
-              why: 'Continuing the conversation',
-              when: 'immediate' as const,
-              likelihood: 'Will respond'
-            }
-          ],
-          expectedDynamic: 'Continuing conversation',
-          continueWithoutUser: false,
-          tensionLevel: 'Relaxed'
-        };
-      }
+      // Complete fallback
+      orchestration = {
+        interpretation: 'User wants to continue the conversation',
+        plan: [
+          {
+            who: participants.length > 0 ? participants[0].name : 'Assistant',
+            why: 'Continuing the conversation',
+            when: 'immediate' as const,
+            likelihood: 'Will respond'
+          }
+        ],
+        expectedDynamic: 'Continuing conversation',
+        continueWithoutUser: false,
+        tensionLevel: 'Relaxed'
+      };
     }
     
     // Generate each character's response
@@ -147,7 +118,7 @@ export async function POST(
         if (!response.speaker || !response.speech) {
           console.warn('Invalid character response, using defaults:', response);
           response.speaker = character.name;
-          response.speech = response.content || response.speech || 
+          response.speech = response.speech || 
             `That's an interesting point. As ${character.name}, I find myself reflecting on what you've shared.`;
           response.delivery = response.delivery || 'Speaking thoughtfully';
           response.internalState = response.internalState || 'Engaged with the conversation';

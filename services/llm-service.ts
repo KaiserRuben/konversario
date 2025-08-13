@@ -45,10 +45,10 @@ If the input is ambiguous (e.g., just "Einstein"), make reasonable assumptions.
 Return a JSON object with the structure defined in SetupResponse.
 `;
 
-      return await withRetry(() => callOllama(prompt, SetupResponseSchema));
+      return await withRetry(() => callOllama(prompt, SetupResponseSchema)) as SetupResponse;
     } catch (error) {
       console.warn('Setup room failed, using fallback:', error);
-      const fallback = createFallbackResponse('setup') as SetupResponse;
+      const fallback = createFallbackResponse('setup') as unknown as SetupResponse;
       
       // Try to parse character names from user input as fallback
       const names = userInput.split(/[,&\+]|\s+and\s+/).map(n => n.trim()).filter(n => n);
@@ -117,10 +117,10 @@ You MUST return a JSON object with EXACTLY this structure:
 IMPORTANT: The "plan" field MUST be an array of objects with the exact keys: who, why, when, likelihood.
 `;
 
-      return await withRetry(() => callOllama(prompt, OrchestrationSchema));
+      return await withRetry(() => callOllama(prompt, OrchestrationSchema)) as OrchestrationResponse;
     } catch (error) {
       console.warn('Orchestration failed, using fallback:', error);
-      const fallback = createFallbackResponse('orchestration') as OrchestrationResponse;
+      const fallback = createFallbackResponse('orchestration') as unknown as OrchestrationResponse;
       
       // Ensure fallback has a valid plan array
       if (!fallback.plan || !Array.isArray(fallback.plan)) {
@@ -168,10 +168,10 @@ Respond authentically as ${character.name}. Include what you say, how you say it
 Return a JSON object with your response.
 `;
 
-      return await withRetry(() => callOllama(prompt, CharacterResponseSchema));
+      return await withRetry(() => callOllama(prompt, CharacterResponseSchema)) as CharacterResponse;
     } catch (error) {
       console.warn(`Character response failed for ${character.name}, using fallback:`, error);
-      const fallback = createFallbackResponse('character') as CharacterResponse;
+      const fallback = createFallbackResponse('character') as unknown as CharacterResponse;
       
       fallback.speaker = character.name;
       fallback.speech = `That's an interesting point. As ${character.name}, I find myself reflecting on what you've shared.`;
@@ -199,7 +199,7 @@ Generate a natural exchange between the participants. They should respond to eac
 Return a JSON object with the exchanges.
 `;
 
-    return await withRetry(() => callOllama(prompt, ExchangeResponseSchema));
+    return await withRetry(() => callOllama(prompt, ExchangeResponseSchema)) as ExchangeResponse;
   }
 
   async compressContext(room: Room, locale: string = 'en'): Promise<CompressionResponse> {
@@ -214,7 +214,7 @@ Distill this conversation to its essence while preserving character evolution an
 Return a JSON object with the compressed context.
 `;
 
-    return await withRetry(() => callOllama(prompt, CompressionResponseSchema));
+    return await withRetry(() => callOllama(prompt, CompressionResponseSchema)) as CompressionResponse;
   }
 
   // Background assessment methods - called asynchronously after responses
@@ -238,7 +238,7 @@ Assess the current conversation stage based on user engagement signals and momen
 Return a JSON object with the assessment.
 `;
 
-      return await withRetry(() => callOllama(prompt, ConversationStageSchema));
+      return await withRetry(() => callOllama(prompt, ConversationStageSchema)) as ConversationStageAssessment;
     } catch (error) {
       console.warn('Conversation stage assessment failed, using fallback:', error);
       // Fallback based on message characteristics
@@ -270,7 +270,7 @@ Determine optimal response parameters for this input.
 Return a JSON object with the modulation parameters.
 `;
 
-      return await withRetry(() => callOllama(prompt, ResponseModulationSchema));
+      return await withRetry(() => callOllama(prompt, ResponseModulationSchema)) as ResponseModulation;
     } catch (error) {
       console.warn('Response modulation assessment failed, using fallback:', error);
       // Fallback based on simple heuristics
