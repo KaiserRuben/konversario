@@ -5,13 +5,47 @@
     "description": "Engage in conversations with historical figures, fictional characters, and great minds",
     "privacyNote": "Powered by local AI - your conversations stay private",
     "createRoom": "Create Your Conversation Room",
-    "whoToTalkTo": "Who would you like to talk to?",
+    "whoToTalkTo": "Who would you like to summon?",
     "startConversation": "Start Conversation",
     "creating": "Creating Room...",
-    "placeholder": "e.g., Einstein, Van Gogh, and Socrates",
+    "placeholder": "Who would you like to summon?",
     "placeholderHelp": "Enter names of historical figures, fictional characters, or descriptive roles",
     "conversationFocus": "Conversation Focus (Optional)",
-    "focusPlaceholder": "e.g., The nature of creativity, Ethics in science, Art and suffering",
+    "focusPlaceholder": "What should they discuss? (optional)",
+    "atmosphereSubtitles": {
+      "morning": "Begin a conversation at dawn",
+      "day": "Summon great minds",
+      "evening": "Evening discussions await",
+      "night": "Midnight conversations"
+    },
+    "hints": {
+      "suggestions": "Press / for suggestions",
+      "topic": "Press Tab for topic",
+      "mobile": "Start typing to begin",
+      "recentConversations": "Your recent conversations below"
+    },
+    "templates": {
+      "philosophy": {
+        "prompt": "Socrates, Plato, and Kant",
+        "hint": "Deep philosophical discourse"
+      },
+      "art": {
+        "prompt": "Van Gogh, Picasso, and Da Vinci",
+        "hint": "Creative perspectives"
+      },
+      "science": {
+        "prompt": "Einstein, Curie, and Darwin",
+        "hint": "Scientific exploration"
+      },
+      "literature": {
+        "prompt": "Shakespeare, Austen, and Woolf",
+        "hint": "Literary discussion"
+      },
+      "history": {
+        "prompt": "Napoleon, Cleopatra, and Churchill",
+        "hint": "Historical insights"
+      }
+    },
     "quickExamples": "Quick Examples",
     "clickExample": "Click any example to try it:",
     "requirements": "Requirements",

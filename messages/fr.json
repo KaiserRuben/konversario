@@ -5,13 +5,47 @@
     "description": "Engagez des conversations avec des figures historiques, personnages fictifs et grands esprits",
     "privacyNote": "Alimenté par IA locale - vos conversations restent privées",
     "createRoom": "Créez Votre Salle de Conversation",
-    "whoToTalkTo": "Avec qui aimeriez-vous parler ?",
+    "whoToTalkTo": "Qui aimeriez-vous invoquer ?",
     "startConversation": "Commencer la Conversation",
     "creating": "Création de la Salle...",
-    "placeholder": "par ex. Einstein, Van Gogh et Socrate",
+    "placeholder": "Qui aimeriez-vous invoquer ?",
     "placeholderHelp": "Entrez les noms de figures historiques, personnages fictifs ou rôles descriptifs",
     "conversationFocus": "Focus de Conversation (Optionnel)",
-    "focusPlaceholder": "par ex. La nature de la créativité, L'éthique en science, L'art et la souffrance",
+    "focusPlaceholder": "De quoi devraient-ils discuter ? (optionnel)",
+    "atmosphereSubtitles": {
+      "morning": "Commencez une conversation à l'aube",
+      "day": "Invoquez de grands esprits",
+      "evening": "Les discussions du soir vous attendent",
+      "night": "Conversations de minuit"
+    },
+    "hints": {
+      "suggestions": "Appuyez sur / pour des suggestions",
+      "topic": "Appuyez sur Tab pour le sujet",
+      "mobile": "Commencez à taper",
+      "recentConversations": "Vos conversations récentes ci-dessous"
+    },
+    "templates": {
+      "philosophy": {
+        "prompt": "Socrate, Platon et Kant",
+        "hint": "Discours philosophique profond"
+      },
+      "art": {
+        "prompt": "Van Gogh, Picasso et Da Vinci",
+        "hint": "Perspectives créatives"
+      },
+      "science": {
+        "prompt": "Einstein, Curie et Darwin",
+        "hint": "Exploration scientifique"
+      },
+      "literature": {
+        "prompt": "Shakespeare, Austen et Woolf",
+        "hint": "Discussion littéraire"
+      },
+      "history": {
+        "prompt": "Napoléon, Cléopâtre et Churchill",
+        "hint": "Aperçus historiques"
+      }
+    },
     "quickExamples": "Exemples Rapides",
     "clickExample": "Cliquez sur n'importe quel exemple pour l'essayer :",
     "requirements": "Prérequis",

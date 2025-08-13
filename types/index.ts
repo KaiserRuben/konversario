@@ -1,3 +1,4 @@
+
 export interface Room {
   id: string;
   participants: Participant[];
@@ -29,6 +30,12 @@ export interface Message {
     gesture?: string;
     internalThought?: string;
     addressedTo?: string[];
+    subtext?: string;
+    manner?: string;
+    delivery?: string;
+    effect?: string;
+    internalState?: string;
+    thinking?: boolean;
   };
 }
 
@@ -40,6 +47,7 @@ export interface RoomState {
   currentDynamic: string;
 }
 
+// Your existing orchestration types
 export interface SetupResponse {
   success: boolean;
   participants: Array<{
@@ -109,4 +117,64 @@ export interface ResponseModulation {
   depth: 'surface' | 'accessible' | 'philosophical';
   maxCharacters: number;
   priority: 'clarity' | 'authenticity' | 'engagement';
+}
+
+// New visual system types for the ethereal design
+export type ParticleBehavior = 'orbit' | 'float' | 'burst' | 'spiral' | 'drift' | 'static';
+
+export interface EmotionVisual {
+  particleColor: string;
+  glowIntensity: number;
+  textWeight: number;
+  animationSpeed: number;
+  particleBehavior: ParticleBehavior;
+}
+
+export interface ParticleConfig {
+  count: number;
+  color: string;
+  behavior: ParticleBehavior;
+  speed: number;
+  opacity: number;
+  lifetime: number;
+}
+
+export interface AtmosphereTheme {
+  name: 'morning' | 'day' | 'evening' | 'night';
+  hue: number;
+  saturation: number;
+  lightness: number;
+  particleSpeed: number;
+}
+
+export interface VisualState {
+  // Emotion-based
+  particleColor: string;
+  particleBehavior: ParticleBehavior;
+  glowIntensity: number;
+
+  // Text presentation
+  textWeight: number;
+  textSpeed: number;
+  textEmphasis: number;
+  textRhythm: 'steady' | 'varied' | 'staccato' | 'flowing';
+  fontSize: number;
+
+  // Atmosphere
+  atmosphereIntensity: number;
+  atmosphereBlur: number;
+  particleDensity: number;
+
+  // Effects
+  tensionLevel: number;
+  energyLevel: number;
+  atmosphereShift?: string;
+
+  // Metadata flags
+  hasInternalThought: boolean;
+  hasSubtext: boolean;
+  hasGesture: boolean;
+
+  // Overall importance
+  importance: number;
 }
